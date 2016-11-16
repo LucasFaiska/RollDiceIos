@@ -24,11 +24,10 @@ class Dice {
     }
     
     func roll() {
-        var total = 0
-        
-        if(quantity > 0) {
-            for _ in 0...quantity {
-                total += Int(arc4random_uniform(UInt32(dice_weight))) + 1
+        self.total = 0
+        if(self.quantity > 0) {
+            for _ in 0..<self.quantity{
+                self.total += Int(arc4random_uniform(UInt32(self.dice_weight))) + 1
             }
         }
     }

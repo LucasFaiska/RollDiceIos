@@ -315,6 +315,7 @@
 				6B1712681DD3941A001020FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

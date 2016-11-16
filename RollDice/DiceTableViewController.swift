@@ -13,6 +13,9 @@ class DiceTableViewController: UITableViewController {
     // MARK: Properties
     var dices = [Dice]()
     
+    @IBOutlet weak var rollButton: UIButton!
+    @IBOutlet weak var totalLabel: UILabel!
+    
     func loadDices() {
         let d2 = Dice(name: "D2", quantity: 0, dice_weight: 2, total: 0)
         let d4 = Dice(name: "D4", quantity: 0, dice_weight: 4, total: 0)
@@ -61,19 +64,41 @@ class DiceTableViewController: UITableViewController {
             cell.backgroundColor = UIColor.clear
         }
 
-        cell.diceLabel.text = dice.name
-        cell.diceLabel.textAlignment = .center
-        cell.parcialResult.text = String(dice.total)
-        cell.parcialResult.textAlignment = .center
-        cell.cleanQuantity.addTarget(self, action: "clean", for: .touchUpInside)
-        
+        cell.setDataSource(d: dice)
+    
         return cell
     }
- 
-    func clean(sender: UIButton){
-        let test = 1
-    }
 
+    @IBAction func rollDiceClick(_ sender: UIButton) {
+        rollAll()
+        total()
+    }
+    
+    @IBAction func clearClick(_ sender: UIButton) {
+        total()
+    }
+    
+    func rollAll(){
+        let cells = self.tableView.visibleCells as! Array<DiceTableViewCell>
+        
+        for c in cells {
+            c.roll()
+        }
+    }
+    
+    func total(){
+        let cells = self.tableView.visibleCells as! Array<DiceTableViewCell>
+        
+        var total = 0;
+        
+        for c in cells {
+            total += Int(c.parcialResult.text!)!
+        }
+        
+        self.totalLabel.text = String(total)
+    }
+    
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
